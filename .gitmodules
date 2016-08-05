@@ -1,0 +1,3 @@
+[submodule "cryptolib"]
+	path = cryptolib
+	url = https://github.com/nshadov/cryptolib
