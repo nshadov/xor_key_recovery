@@ -14,6 +14,7 @@ parser.add_option("-n", "--keylength", dest="keylength", default="4", help="Key 
 
 
 plaintext = options.plaintext_fragment
+print "[+] Fragment '%s' expected to be found in plaintext" % options.plaintext_fragment
 keylength = int(options.keylength)
 if keylength < 1:
     print "[!] Key lenght must be larger than one."
@@ -29,13 +30,14 @@ ciphertext = open(options.input_filename, "rb").read()
 
 plaintext_template  = "".join([ chr(ord(plaintext[i])^ord(plaintext[i+keylength])) for i in range(0, len(plaintext)-keylength)])
 ciphertext_template = "".join([ chr(ord(ciphertext[i])^ord(ciphertext[i+keylength])) for i in range(0, len(ciphertext)-keylength)])
-index = ciphertext_template.index(plaintext_template)
 
-if index < 0:
+try:
+    index = ciphertext_template.index(plaintext_template)
+except:
     print "[i] Plaintext not found in ciphertext with provided keylength"
     sys.exit(0)
-else:
-    print "[+] Found plaintext at position: %d" % index
+
+print "[+] Found plaintext at position: %d" % index
 
     
 key = RollingKey([ hex(ord(ciphertext[index+i])^ord(plaintext[i])) for i in range(0, keylength) ])
