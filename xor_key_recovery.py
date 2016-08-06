@@ -22,6 +22,7 @@ if len(plaintext) < 2*keylength:
     print "[!] Plaintext must be at least 2 times longer than expected keylength"
     sys.exit(-1);
 
+    
 print "[+] Reading encrypted file from: '%s'" % options.input_filename
 ciphertext = open(options.input_filename, "rb").read()
 
@@ -33,12 +34,14 @@ index = ciphertext_template.index(plaintext_template)
 if index < 0:
     print "[i] Plaintext not found in ciphertext with provided keylength"
     sys.exit(0)
+else:
+    print "[+] Found plaintext at position: %d" % index
 
-print "[+] Found plaintext at position: %d" % index
-
+    
 key = RollingKey([ hex(ord(ciphertext[index+i])^ord(plaintext[i])) for i in range(0, keylength) ])
 key = RollingKey([key[k] for k in range(-index,-index+keylength)])
 print "[+] Key found: %s" % key
+
 
 print "[+] Saving decrypted file to: '%s'" % options.output_filename
 out = open(options.output_filename, "wb")
