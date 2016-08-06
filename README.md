@@ -20,7 +20,7 @@ $ ./xor_encrypt_file.py -f /bin/ls -o encrypted.file -k "secret"
 ```
 
 Now to recover secret key "secret", we use second script. We expect ELF
-binary to contain phrase "__gmon_start__". We dont know key lenght, but
+binary to contain phrase ```__gmon_start__```. We dont know key lenght, but
 after few tries with consecutive ```n=1```, ```n=2```, ```n=3``` ... we finally try ```n=6```:
 
 ```
